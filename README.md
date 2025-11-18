@@ -1,198 +1,149 @@
-## Classificador Inteligente de Emails com IA
+# Classificador Inteligente de Emails com IA
 
 Uma aplicação web simples que classifica automaticamente emails como Produtivo ou Improdutivo e sugere respostas automáticas usando Inteligência Artificial.
 
-# Funcionalidades
+---
 
-Classificação Automática - Categoriza emails em Produtivo ou Improdutivo
-Processamento de Texto (NLP) - Limpeza e análise inteligente de texto
-Geração de Respostas - Sugere respostas automáticas contextualizadas
-Upload de Arquivos - Suporta .txt e .pdf
-Interface Moderna - Design responsivo com React
-API REST - Backend em Python com Flask
+## Funcionalidades
 
-# Tecnologias
+* Classificação automática de emails
+* Processamento de texto (NLP) com NLTK
+* Geração de respostas automáticas contextualizadas
+* Suporte a upload de arquivos (.txt e .pdf)
+* Interface moderna em React
+* API REST com backend em Flask (Python)
 
-Camada
-Tecnologia
-Frontend
-React 18 + Axios
-Backend
-Flask (Python)
-NLP
-NLTK (Natural Language Toolkit)
-IA
-OpenAI API (GPT-3.5)
-Deploy
-Render.com
+---
 
+## Tecnologias Utilizadas
 
-# Pré-requisitos
+| Camada   | Tecnologia           |
+| -------- | -------------------- |
+| Frontend | React 18 + Axios     |
+| Backend  | Flask (Python)       |
+| NLP      | NLTK                 |
+| IA       | OpenAI API (GPT-3.5) |
+| Deploy   | Render.com           |
 
-•
-Node.js 14+ (para frontend)
+---
 
-•
-Python 3.8+ (para backend)
+## Pré-requisitos
 
-•
-npm ou yarn (gerenciador de pacotes)
+* Node.js 14+
+* Python 3.8+
+* npm ou yarn
+* pip
+* Chave da OpenAI API ou AI Studio
 
-•
-pip (gerenciador de pacotes Python)
+---
 
-•
-Chave da OpenAI API ou AI Studio
+## Instalação Local
 
-# Instalação Local
+### 1. Clonar o Repositório
 
-Clonar o Repositório
-
-Bash
-
-
+```bash
 git clone <seu-repositorio>
 cd email_classifier_simple
+```
 
+---
 
-Configurar Backend (Python)
+### 2. Configurar Backend (Python)
 
-Bash
-
-
-# Entrar na pasta do backend
+```bash
 cd backend
-
-# Criar ambiente virtual
 python -m venv venv
 
 # Ativar ambiente virtual
-# No Windows:
+# Windows:
 venv\Scripts\activate
-# No macOS/Linux:
+# macOS/Linux:
 source venv/bin/activate
 
-# Instalar dependências
 pip install -r requirements.txt
 
 # Criar arquivo .env
 cp .env.example .env
+```
 
-# Editar .env e adicionar sua chave OpenAI
-# OPENAI_API_KEY=sua_chave_aqui
+Adicionar ao `.env`:
 
+```
+OPENAI_API_KEY=sua_chave_aqui
+```
 
-Configurar Frontend (React)
+---
 
-Bash
+### 3. Configurar Frontend (React)
 
-
-# Voltar para a pasta raiz
+```bash
 cd ../frontend
-
-# Instalar dependências
 npm install
-
-# Criar arquivo .env
 cp .env.example .env
+```
 
-# Editar .env (se necessário)
-# REACT_APP_API_URL=http://localhost:5000
+Se necessário, editar:
 
+```
+REACT_APP_API_URL=http://localhost:5000
+```
 
-Executar Localmente
+---
 
-Terminal 1 - Backend
+## Execução Local
 
-Bash
+### Backend (Terminal 1)
 
-
+```bash
 cd backend
-source venv/bin/activate  # ou venv\Scripts\activate no Windows
+source venv/bin/activate  # ou venv\Scripts\activate
 python app.py
+```
 
+Backend em: [http://localhost:5000](http://localhost:5000)
 
-O backend estará em: http://localhost:5000
+### Frontend (Terminal 2)
 
-Terminal 2 - Frontend
-
-Bash
-
-
+```bash
 cd frontend
 npm start
+```
 
+Frontend em: [http://localhost:3000](http://localhost:3000)
 
-O frontend estará em: http://localhost:3000
+---
 
-Como Usar
+## Como Usar
 
-1.
-Abra http://localhost:3000 no navegador
+1. Acesse [http://localhost:3000](http://localhost:3000)
+2. Cole o texto do email ou envie um arquivo .txt / .pdf
+3. Clique em "Classificar Email"
+4. Visualize categoria, confiança, motivo e resposta sugerida
+5. Copie a resposta com um clique
 
-2.
-Escolha uma opção:
+---
 
-•
-Colar texto direto do email
+## Endpoints da API
 
-•
-Fazer upload de arquivo (.txt ou .pdf )
+### POST /classify
 
+Entrada JSON:
 
-
-3.
-Clique em "Classificar Email"
-
-4.
-Veja os resultados:
-
-•
-Categoria (Produtivo/Improdutivo)
-
-•
-Nível de confiança
-
-•
-Motivo da classificação
-
-•
-Resposta sugerida
-
-
-
-5.
-Copie a resposta sugerida com um clique
-
-Endpoints da API
-
-POST /classify
-
-Classifica um email
-
-Entrada (JSON):
-
-JSON
-
-
+```json
 {
   "email_content": "Olá, gostaria de saber o status da minha requisição..."
 }
+```
 
+Entrada por arquivo:
 
-Entrada:
-
-Plain Text
-
-
+```
 file: <arquivo .txt ou .pdf>
+```
 
+Exemplo de resposta:
 
-Saída:
-
-JSON
-
-
+```json
 {
   "sucesso": true,
   "categoria": "Produtivo",
@@ -200,195 +151,126 @@ JSON
   "motivo": "Email solicita ação específica (atualização de status)",
   "resposta_sugerida": "Obrigado por entrar em contato. Estamos verificando..."
 }
+```
 
+---
 
-GET /health
+### GET /health
 
-Verifica se a API está funcionando
-
-Saída:
-
-JSON
-
-
+```json
 {
   "status": "ok",
   "message": "API funcionando"
 }
+```
 
+### GET /test
 
-GET /test
+Retorna um email de teste classificado.
 
-Testa a API com um email de exemplo
+---
 
-Exemplos de Classificação
+## Exemplos de Classificação
 
-Email Produtivo
-
-Entrada:
-
-
-Olá, gostaria de saber o status da minha requisição #12345 que foi aberta em 01/11/2025. Ainda não recebi retorno sobre o problema.
-
-Resultado:
-
-•
-Categoria: Produtivo
-
-•
-Confiança: Alta
-
-•
-Motivo: Email solicita ação específica
-
-•
-Resposta: Obrigado por entrar em contato. Estamos verificando o status de sua requisição e você receberá uma atualização em breve.
-
-Email Improdutivo
+### Email Produtivo
 
 Entrada:
 
-
-Feliz Natal! Desejo um ótimo fim de ano para você e sua equipe!
+> Olá, gostaria de saber o status da minha requisição #12345 que foi aberta em 01/11/2025.
 
 Resultado:
 
-•
-Categoria: Improdutivo
+* Categoria: Produtivo
+* Confiança: Alta
+* Motivo: Solicita ação específica
+* Resposta: "Obrigado por entrar em contato. Estamos verificando o status..."
 
-•
-Confiança: Alta
+---
 
-•
-Motivo: Mensagem de felicitação que não requer ação imediata
+### Email Improdutivo
 
-•
-Resposta: Obrigado pelas felicitações! Desejamos um excelente ano novo para você também!
+Entrada:
 
-Deploy em Nuvem
+> Feliz Natal! Desejo um ótimo fim de ano para você e sua equipe!
 
-Opção 1: Render.com
+Resultado:
 
-1.
-Criar conta em https://render.com
+* Categoria: Improdutivo
+* Confiança: Alta
+* Motivo: Mensagem sem necessidade de ação
+* Resposta: "Obrigado pelas felicitações..."
 
-2.
-Fazer fork do repositório no GitHub
+---
 
-3.
-Conectar Render.com com GitHub
+## Deploy em Nuvem
 
-4.
-Criar serviço para o backend:
+### Render.com
 
-•
-Build command: pip install -r requirements.txt
+1. Criar conta no Render
+2. Fazer fork do repositório
+3. Conectar GitHub ao Render
+4. Criar serviço do backend:
 
-•
-Start command: gunicorn app:app
+   * Build: `pip install -r requirements.txt`
+   * Start: `gunicorn app:app`
+   * Variáveis: `OPENAI_API_KEY`
+5. Criar serviço do frontend:
 
-•
-Environment: Adicionar OPENAI_API_KEY
+   * Build: `npm install && npm run build`
+   * Publish directory: `build`
 
+### Heroku
 
+* Criar conta
+* Instalar CLI
+* Deploy do backend
+* Deploy do frontend
 
-5.
-Criar serviço para o frontend:
+### Vercel
 
-•
-Build command: npm install && npm run build
+* Criar conta
+* Importar repositório
+* Configurar variáveis de ambiente
+* Deploy automático
 
-•
-Publish directory: build
+---
 
+## Problemas Comuns (Troubleshooting)
 
+### Erro: "Falha ao conectar com o servidor"
 
-Opção 2: Heroku
+* Verifique backend ([http://localhost:5000/health](http://localhost:5000/health))
+* Confirme URL da API
+* Verifique CORS
 
-1.
-Criar conta em https://www.heroku.com
+### Erro: "Invalid API Key"
 
-2.
-Instalar Heroku CLI
+* Cheque chave no .env
+* Confirme permissões da chave
 
-3.
-Deploy backend:
+### Erro: "File too large"
 
-4.
-Deploy frontend:
+* Limite máximo: 5MB
+* Comprima ou divida o arquivo
 
-Opção 3: Vercel
+---
 
-1.
-Criar conta em https://vercel.com
+## Estrutura do Projeto
 
-2.
-Importar repositório
-
-3.
-Configurar variáveis de ambiente
-
-4.
-Deploy automático
-
-Troubleshooting
-
-Erro: "Falha ao conectar com o servidor"
-
-Solução:
-
-•
-Verifique se o backend está rodando (http://localhost:5000/health )
-
-•
-Verifique se a URL da API está correta no .env do frontend
-
-•
-Verifique CORS no backend
-
-Erro: "Invalid API Key"
-
-Solução:
-
-•
-Verifique se a chave OpenAI está correta no .env
-
-•
-Verifique se a chave tem permissões para usar GPT-3.5
-
-Erro: "File too large"
-
-Solução:
-
-•
-Limite de arquivo é 5MB
-
-•
-Comprima ou divida o arquivo em partes menores
-
-Estrutura do Projeto
-
-Plain Text
-
-
+```
 email_classifier_simple/
 ├── backend/
-│   ├── app.py              # Aplicação Flask
-│   ├── classifier.py       # Lógica de classificação
-│   ├── requirements.txt    # Dependências Python
-│   ├── .env.example        # Exemplo de variáveis
-│   └── uploads/            # Pasta para arquivos temporários
+│   ├── app.py
+│   ├── classifier.py
+│   ├── requirements.txt
+│   ├── .env.example
+│   └── uploads/
 │
 ├── frontend/
 │   ├── public/
-│   │   └── index.html
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── EmailForm.jsx
-│   │   │   └── ResultDisplay.jsx
 │   │   ├── styles/
-│   │   │   ├── EmailForm.css
-│   │   │   └── ResultDisplay.css
 │   │   ├── App.jsx
 │   │   ├── App.css
 │   │   └── index.js
@@ -396,36 +278,27 @@ email_classifier_simple/
 │   └── .env.example
 │
 └── README.md
+```
 
+---
 
-Segurança
+## Segurança
 
-•
-Chaves de API: Nunca commit .env com chaves reais
+* Não faça commit de chaves reais
+* CORS configurado apenas para o frontend
+* Inputs validados
+* Limite de upload de 5MB
 
-•
-CORS: Configurado para aceitar requisições do frontend
+---
 
-•
-Validação: Todos os inputs são validados
+## Suporte
 
-•
-Limite de arquivo: Máximo 5MB
+* Documentação OpenAI: [https://platform.openai.com/docs](https://platform.openai.com/docs)
+* Documentação Flask: [https://flask.palletsprojects.com](https://flask.palletsprojects.com)
+* Documentação React: [https://react.dev](https://react.dev)
 
-Suporte
+---
 
-Para dúvidas ou problemas:
-
-1.
-Consulte a documentação da OpenAI: https://platform.openai.com/docs
-
-2.
-Consulte a documentação do Flask: https://flask.palletsprojects.com
-
-3.
-Consulte a documentação do React: https://react.dev
-
-Licença
+## Licença
 
 Este projeto é de código aberto e disponível sob a licença MIT.
-
