@@ -9,21 +9,40 @@ from classifier import EmailClassifier
 
 load_dotenv()
 
+# Caminhos corretos para servir React
+FRONTEND_BUILD = os.path.join(os.path.dirname(__file__), '..', 'frontend', 'build')
+
 app = Flask(
     __name__,
-    static_folder=os.path.join(os.path.pardir, 'frontend', 'build', 'static'),
-    template_folder=os.path.join(os.path.pardir, 'frontend', 'build')
+    static_folder=os.path.join(FRONTEND_BUILD, 'static'),
+    static_url_path='/static',
+    template_folder=FRONTEND_BUILD
 )
 
 CORS(app)
 
+# ==================== SERVIR FRONTEND ====================
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(os.path.join(app.template_folder, path)):
-        return send_from_directory(app.template_folder, path)
-    else:
-        return send_from_directory(app.template_folder, 'index.html')
+def serve_frontend(path):
+    """Servir React SPA"""
+    # Se for arquivo estático, servir
+    if path and path.startswith('static/'):
+        return send_from_directory(app.static_folder, path[7:])
+    
+    # Se for arquivo na pasta build, servir
+    if path and os.path.exists(os.path.join(FRONTEND_BUILD, path)):
+        return send_from_directory(FRONTEND_BUILD, path)
+    
+    # Caso contrário, servir index.html (para SPA)
+    index_path = os.path.join(FRONTEND_BUILD, 'index.html')
+    if os.path.exists(index_path):
+        return send_from_directory(FRONTEND_BUILD, 'index.html')
+    
+    return jsonify({"erro": "Frontend não encontrado. Certifique-se que npm run build foi executado"}), 404
+
+# ==================== ROTAS DA API ====================
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}
@@ -62,7 +81,7 @@ def health():
     return jsonify({"status": "ok", "message": "API funcionando"}), 200
 
 
-@app.route('/api/classify', methods=['POST'])  # ← MUDANÇA: Adicionado /api/
+@app.route('/api/classify', methods=['POST'])
 def classify():
     try:
         email_content = None
@@ -102,7 +121,7 @@ def classify():
         }), 500
 
 
-@app.route('/api/test', methods=['GET'])  # ← MUDANÇA: Adicionado /api/
+@app.route('/api/test', methods=['GET'])
 def test():
     email_teste = """
     Olá,
