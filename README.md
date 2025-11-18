@@ -42,8 +42,8 @@ Uma aplicação web simples que classifica automaticamente emails como Produtivo
 ### 1. Clonar o Repositório
 
 ```bash
-git clone <seu-repositorio>
-cd email_classifier_simple
+git clone https://github.com/Augustossn/Classificador-de-Email
+cd Classificador de email
 ```
 
 ---
