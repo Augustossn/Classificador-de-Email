@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import PyPDF2
@@ -9,12 +9,25 @@ from classifier import EmailClassifier
 
 load_dotenv()
 
-app = Flask(__name__)
-CORS(app)  
+app = Flask(
+    __name__,
+    static_folder=os.path.join(os.path.pardir, 'frontend', 'build', 'static'),
+    template_folder=os.path.join(os.path.pardir, 'frontend', 'build')
+)
+
+CORS(app)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.template_folder, path)):
+        return send_from_directory(app.template_folder, path)
+    else:
+        return send_from_directory(app.template_folder, 'index.html')
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf'} # formatos permitidos
-MAX_FILE_SIZE = 5 * 1024 * 1024  # tamanho máximo
+ALLOWED_EXTENSIONS = {'txt', 'pdf'}
+MAX_FILE_SIZE = 5 * 1024 * 1024
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -25,7 +38,6 @@ def allowed_file(filename):
 
 
 def extract_text_from_file(file_path):
-    # extração de texto do arquivo pdf ou txt
     try:
         if file_path.endswith('.txt'):
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -45,23 +57,20 @@ def extract_text_from_file(file_path):
         raise Exception(f"Erro ao ler arquivo: {str(e)}")
 
 
-@app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({"status": "ok", "message": "API funcionando"}), 200
 
 
-@app.route('/classify', methods=['POST'])
+@app.route('/api/classify', methods=['POST'])  # ← MUDANÇA: Adicionado /api/
 def classify():
-    # classifição de email
     try:
         email_content = None
         
-        # opção de colar o email
         if request.is_json:
             data = request.get_json()
             email_content = data.get('email_content', '').strip()
         
-        # opção de upar o email
         elif 'file' in request.files:
             file = request.files['file']
             
@@ -93,9 +102,8 @@ def classify():
         }), 500
 
 
-@app.route('/test', methods=['GET'])
+@app.route('/api/test', methods=['GET'])  # ← MUDANÇA: Adicionado /api/
 def test():
-    # teste para ver se API está funcionando corretamente
     email_teste = """
     Olá,
     
@@ -110,12 +118,12 @@ def test():
     return jsonify(resultado), 200
 
 
-@app.errorhandler(404) # erro nas rotas
+@app.errorhandler(404)
 def not_found(error):
     return jsonify({"erro": "Rota não encontrada"}), 404
 
 
-@app.errorhandler(500) # erro interno
+@app.errorhandler(500)
 def internal_error(error):
     return jsonify({"erro": "Erro interno do servidor"}), 500
 

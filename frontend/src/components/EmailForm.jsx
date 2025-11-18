@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/EmailForm.css';
 
-function EmailForm({ onResult, onLoading }) {
+function EmailForm({ onResult, onLoading } ) {
   const [emailText, setEmailText] = useState('');
   const [file, setFile] = useState(null);
   const [activeTab, setActiveTab] = useState('text');
   const [error, setError] = useState('');
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  // ← MUDANÇA 1: URL vazia (usa URL relativa)
+  const API_URL = process.env.REACT_APP_API_URL || '';
 
   const handleTextChange = (e) => {
     setEmailText(e.target.value);
@@ -53,16 +54,18 @@ function EmailForm({ onResult, onLoading }) {
       let response;
 
       if (activeTab === 'text') {
+        // ← MUDANÇA 2: Adicionar /api/
         response = await axios.post(
-          `${API_URL}/classify`,
+          `${API_URL}/api/classify`,
           { email_content: emailText },
           { headers: { 'Content-Type': 'application/json' } }
         );
       } else {
         const formData = new FormData();
         formData.append('file', file);
+        // ← MUDANÇA 2: Adicionar /api/
         response = await axios.post(
-          `${API_URL}/classify`,
+          `${API_URL}/api/classify`,
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );

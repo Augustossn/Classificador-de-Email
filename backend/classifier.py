@@ -5,7 +5,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import SnowballStemmer
-import google.generativeai as genai # type: ignore
+import google.generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
