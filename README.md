@@ -1,8 +1,8 @@
-Classificador Inteligente de Emails com IA
+## Classificador Inteligente de Emails com IA
 
 Uma aplicação web simples que classifica automaticamente emails como Produtivo ou Improdutivo e sugere respostas automáticas usando Inteligência Artificial.
 
-Funcionalidades
+# Funcionalidades
 
 Classificação Automática - Categoriza emails em Produtivo ou Improdutivo
 Processamento de Texto (NLP) - Limpeza e análise inteligente de texto
@@ -11,7 +11,7 @@ Upload de Arquivos - Suporta .txt e .pdf
 Interface Moderna - Design responsivo com React
 API REST - Backend em Python com Flask
 
-Tecnologias
+# Tecnologias
 
 Camada
 Tecnologia
@@ -27,7 +27,7 @@ Deploy
 Render.com
 
 
-Pré-requisitos
+# Pré-requisitos
 
 •
 Node.js 14+ (para frontend)
@@ -44,7 +44,7 @@ pip (gerenciador de pacotes Python)
 •
 Chave da OpenAI API ou AI Studio
 
-Instalação Local
+# Instalação Local
 
 Clonar o Repositório
 
