@@ -293,7 +293,7 @@ email_classifier_simple/
 
 ## Suporte
 
-* Documentação OpenAI: [https://platform.openai.com/docs](https://platform.openai.com/docs)
+* Documentação AIStudio: [https://ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
 * Documentação Flask: [https://flask.palletsprojects.com](https://flask.palletsprojects.com)
 * Documentação React: [https://react.dev](https://react.dev)
 
