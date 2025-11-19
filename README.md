@@ -69,7 +69,7 @@ cp .env.example .env
 Adicionar ao `.env`:
 
 ```
-OPENAI_API_KEY=sua_chave_aqui
+GOOGLE_API_KEY=sua_chave_aqui
 ```
 
 ---
