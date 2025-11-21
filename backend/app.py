@@ -9,7 +9,6 @@ from classifier import EmailClassifier
 
 load_dotenv()
 
-# Caminhos corretos para servir React
 FRONTEND_BUILD = os.path.join(os.path.dirname(__file__), '..', 'frontend', 'build')
 
 app = Flask(
@@ -21,28 +20,21 @@ app = Flask(
 
 CORS(app)
 
-# ==================== SERVIR FRONTEND ====================
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_frontend(path):
-    """Servir React SPA"""
-    # Se for arquivo estático, servir
+
     if path and path.startswith('static/'):
         return send_from_directory(app.static_folder, path[7:])
     
-    # Se for arquivo na pasta build, servir
     if path and os.path.exists(os.path.join(FRONTEND_BUILD, path)):
         return send_from_directory(FRONTEND_BUILD, path)
     
-    # Caso contrário, servir index.html (para SPA)
     index_path = os.path.join(FRONTEND_BUILD, 'index.html')
     if os.path.exists(index_path):
         return send_from_directory(FRONTEND_BUILD, 'index.html')
     
     return jsonify({"erro": "Frontend não encontrado. Certifique-se que npm run build foi executado"}), 404
-
-# ==================== ROTAS DA API ====================
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}

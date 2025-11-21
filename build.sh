@@ -1,29 +1,24 @@
-#!/bin/bash
-set -e  # Parar se houver erro
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
 
 echo "========================================="
 echo "Iniciando build..."
 echo "========================================="
 
-# Frontend
-echo ""
-echo "📦 Instalando dependências do frontend..."
+# 1. Ir para a pasta do frontend e construir
+echo "📦 Instalando e construindo Frontend..."
 cd frontend
-npm install --legacy-peer-deps
-echo "🏗️  Fazendo build do frontend..."
+npm install
 npm run build
-echo "✅ Frontend build completo!"
+
+# 2. O PULO DO GATO: Voltar para a raiz do projeto
+# O erro aconteceu porque o script continuava dentro da pasta 'frontend'
 cd ..
 
-# Backend
-echo ""
+# 3. Instalar dependências do Python
+# O comando abaixo assume que o requirements.txt está na RAÍZ (junto com o build.sh)
 echo "📦 Instalando dependências do backend..."
-cd backend
 pip install -r requirements.txt
-echo "✅ Backend dependências instaladas!"
-cd ..
 
-echo ""
-echo "========================================="
-echo "✅ Build completo com sucesso!"
-echo "========================================="
+echo "✅ Build finalizado com sucesso!"
