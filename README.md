@@ -69,7 +69,7 @@ cp .env.example .env
 Adicionar ao `.env`:
 
 ```
-OPENAI_API_KEY=sua_chave_aqui
+GOOGLE_API_KEY=sua_chave_aqui
 ```
 
 ---
@@ -293,7 +293,7 @@ email_classifier_simple/
 
 ## Suporte
 
-* Documentação OpenAI: [https://platform.openai.com/docs](https://platform.openai.com/docs)
+* Documentação AIStudio: [https://ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
 * Documentação Flask: [https://flask.palletsprojects.com](https://flask.palletsprojects.com)
 * Documentação React: [https://react.dev](https://react.dev)
 
