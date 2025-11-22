@@ -280,6 +280,10 @@ email_classifier_simple/
 └── README.md
 ```
 
+## Link do projeto 
+
+[https://classificador-de-email-com-ia.onrender.com/](https://classificador-de-email-com-ia.onrender.com/)
+
 ---
 
 ## Segurança
